@@ -141,6 +141,7 @@ class WebView extends StatefulWidget {
   final void Function(WebViewController) onWebViewCreated;
   final void Function(WebViewController, String) onPageStarted;
   final void Function(WebViewController, String) onPageFinished;
+  final void Function(WebViewController, String) onPageCommitVisible;
   final void Function(WebResourceError error) onWebResourceError;
   final void Function(WebViewController, int) onProgressChanged;
 
@@ -197,6 +198,7 @@ class WebView extends StatefulWidget {
     this.onWebViewCreated,
     this.onPageStarted,
     this.onPageFinished,
+    this.onPageCommitVisible,
     this.onWebResourceError,
     this.onProgressChanged,
     this.onReceivedHttpAuthRequest,

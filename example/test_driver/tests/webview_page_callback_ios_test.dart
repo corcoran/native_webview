@@ -23,6 +23,7 @@ void main() {
           },
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -36,7 +37,13 @@ void main() {
           expect(event, "about:blank");
           expect(context.loadingRequestEvents.length, 0);
           expect(context.pageStartedEvents.length, 1);
+          expect(context.pageCommitVisibleEvents.length, 1);
           context.complete();
+        },
+      ]));
+      context.pageCommitVisible.stream.listen(onData([
+        (event) {
+          expect(event, "about:blank");
         },
       ]));
     });
@@ -52,6 +59,7 @@ void main() {
           },
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -88,7 +96,13 @@ void main() {
           expect(event, "https://flutter.dev/");
           expect(context.loadingRequestEvents.length, 2);
           expect(context.pageStartedEvents.length, 1);
+          expect(context.pageCommitVisibleEvents.length, 1);
           context.complete();
+        },
+      ]));
+      context.pageCommitVisible.stream.listen(onData([
+        (event) {
+          expect(event, "https://flutter.dev/");
         },
       ]));
     });
@@ -104,6 +118,7 @@ void main() {
           },
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -130,7 +145,13 @@ void main() {
           expect(event, "https://www.google.com/");
           expect(context.pageStartedEvents.length, 1);
           expect(context.loadingRequestEvents.length, 1);
+          expect(context.pageCommitVisibleEvents.length, 1);
           context.complete();
+        },
+      ]));
+      context.pageCommitVisible.stream.listen(onData([
+        (event) {
+          expect(event, "https://google.com/");
         },
       ]));
     });
@@ -151,6 +172,7 @@ void main() {
           },
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -164,8 +186,14 @@ void main() {
           expect(event, "about:blank");
           expect(context.loadingRequestEvents.length, 0);
           expect(context.pageStartedEvents.length, 1);
+          expect(context.pageCommitVisibleEvents.length, 1);
 
           context.complete();
+        },
+      ]));
+      context.pageCommitVisible.stream.listen(onData([
+        (event) {
+          expect(event, "about:blank");
         },
       ]));
     });
@@ -184,6 +212,7 @@ void main() {
           },
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -199,7 +228,13 @@ void main() {
           expect(event, "https://example.com/");
           expect(context.loadingRequestEvents.length, 0);
           expect(context.pageStartedEvents.length, 1);
+          expect(context.pageCommitVisibleEvents.length, 1);
           context.complete();
+        },
+      ]));
+      context.pageCommitVisible.stream.listen(onData([
+        (event) {
+          expect(event, "https://example.com/");
         },
       ]));
     });
@@ -217,6 +252,7 @@ void main() {
         },
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
       ),
     );
 
@@ -232,8 +268,15 @@ void main() {
             event, contains("/flutter_assets/test_assets/initial_file.html"));
         expect(context.loadingRequestEvents.length, 0);
         expect(context.pageStartedEvents.length, 1);
+        expect(context.pageCommitVisibleEvents.length, 1);
 
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(
+            event, contains("/flutter_assets/test_assets/initial_file.html"));
       },
     ]));
   });
@@ -252,6 +295,7 @@ void main() {
           },
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       ),
     );
@@ -266,7 +310,13 @@ void main() {
         expect(event, "https://flutter.dev/404");
         expect(context.loadingRequestEvents.length, 0);
         expect(context.pageStartedEvents.length, 1);
+        expect(context.pageCommitVisibleEvents.length, 1);
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(event, "https://flutter.dev/404");
       },
     ]));
   });
@@ -283,6 +333,7 @@ void main() {
         },
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
       ),
     );
 
@@ -318,7 +369,17 @@ void main() {
         expect(event, "https://www.google.com/");
         expect(context.loadingRequestEvents.length, 1);
         expect(context.pageStartedEvents.length, 2);
+        expect(context.pageCommitVisibleEvents.length, 2);
         context.complete();
+      },
+    ]));
+
+    context.pageStarted.stream.listen(onData([
+      (event) {
+        expect(event, "about:blank");
+      },
+      (event) {
+        expect(event, "https://www.google.com/");
       },
     ]));
   });
@@ -336,6 +397,7 @@ void main() {
         },
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
       ),
     );
 
@@ -382,8 +444,17 @@ void main() {
 
         expect(context.loadingRequestEvents.length, 2);
         expect(context.pageStartedEvents.length, 2);
+        expect(context.pageCommitVisibleEvents.length, 2);
 
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(event, "about:blank");
+      },
+      (event) {
+        expect(event, "https://www.google.com/");
       },
     ]));
   });
@@ -400,6 +471,7 @@ void main() {
         },
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
       ),
     );
 
@@ -436,7 +508,16 @@ void main() {
         expect(event, "https://www.google.com/");
         expect(context.loadingRequestEvents.length, 1);
         expect(context.pageStartedEvents.length, 2);
+        expect(context.pageCommitVisibleEvents.length, 2);
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(event, "about:blank");
+      },
+      (event) {
+        expect(event, "https://www.google.com/");
       },
     ]));
   });
@@ -453,6 +534,7 @@ void main() {
         },
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
       ),
     );
 
@@ -489,8 +571,17 @@ void main() {
         expect(event, "https://www.google.com/");
         expect(context.loadingRequestEvents.length, 1);
         expect(context.pageStartedEvents.length, 2);
+        expect(context.pageCommitVisibleEvents.length, 2);
 
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(event, "about:blank");
+      },
+      (event) {
+        expect(event, "https://www.google.com/");
       },
     ]));
   });

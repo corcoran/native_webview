@@ -82,6 +82,14 @@ class NativeWebViewClient(private val channel: MethodChannel, private val option
         ))
     }
 
+    override fun onPageCommitVisible(view: WebView?, url: String?) {
+        super.onPageCommitVisible(view, url)
+
+        channel.invokeMethod("onPageCommitVisible", mapOf(
+            "url" to url
+        ))
+    }
+
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest): Boolean {
         if (!options.hasShouldOverrideUrlLoading) {
             return false

@@ -15,6 +15,7 @@ void main() {
           onWebViewCreated: context.onWebViewCreated,
           onPageStarted: context.onPageStarted,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
       final controller = await context.webviewController.future;
@@ -45,6 +46,19 @@ void main() {
           expect(currentUrl, 'https://www.google.com/');
 
           context.complete();
+        },
+      ]));
+
+      context.pageCommitVisible.stream.listen(onData([
+        (event) async {
+          expect(event, "https://flutter.dev/");
+          final currentUrl = await controller.currentUrl();
+          expect(currentUrl, 'https://flutter.dev/');
+        },
+        (event) async {
+          expect(event, "https://www.google.com/");
+          final currentUrl = await controller.currentUrl();
+          expect(currentUrl, 'https://www.google.com/');
         },
       ]));
     });

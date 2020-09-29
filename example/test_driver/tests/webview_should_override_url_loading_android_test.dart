@@ -17,6 +17,7 @@ void main() {
         onWebViewCreated: context.onWebViewCreated,
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
         shouldOverrideUrlLoading: (controller, request) async {
           context.shouldOverrideUrlLoading(request);
           return ShouldOverrideUrlLoadingAction.allow;
@@ -53,7 +54,16 @@ void main() {
         expect(event, "https://www.google.com/");
         expect(context.loadingRequestEvents.length, 1);
         expect(context.pageStartedEvents.length, 2);
+        expect(context.pageCommitVisibleEvents.length, 2);
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(event, "about:blank");
+      },
+      (event) {
+        expect(event, "https://www.google.com/");
       },
     ]));
   });
@@ -71,6 +81,10 @@ void main() {
         onPageFinished: (controller, url) {
           count++;
           context.onPageFinished(controller, url);
+        },
+        onPageCommitVisible: (controller, url) {
+          count++;
+          context.onPageCommitVisible(controller, url);
         },
         shouldOverrideUrlLoading: (controller, request) async {
           count++;
@@ -90,7 +104,7 @@ void main() {
         );
 
         Future.delayed(Duration(seconds: 5), () {
-          expect(count, 3);
+          expect(count, 4);
           context.complete();
         });
       },
@@ -105,6 +119,7 @@ void main() {
         onWebViewCreated: context.onWebViewCreated,
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
         shouldOverrideUrlLoading: (controller, request) async {
           context.shouldOverrideUrlLoading(request);
           return ShouldOverrideUrlLoadingAction.allow;
@@ -131,7 +146,16 @@ void main() {
         expect(event, "https://www.google.com/");
         expect(context.loadingRequestEvents.length, 0);
         expect(context.pageStartedEvents.length, 2);
+        expect(context.pageCommitVisibleEvents.length, 2);
         context.complete();
+      },
+    ]));
+    context.pageCommitVisible.stream.listen(onData([
+      (event) {
+        expect(event, "about:blank");
+      },
+      (event) {
+        expect(event, "https://www.google.com/");
       },
     ]));
   });

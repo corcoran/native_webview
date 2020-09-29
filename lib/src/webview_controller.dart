@@ -36,6 +36,14 @@ class WebViewController {
           _widget.onPageFinished(this, call.arguments['url'] as String);
         }
         return true;
+      case 'onPageCommitVisible':
+        if (this.updateFirstLoading != null) {
+          this.updateFirstLoading();
+        }
+        if (_widget.onPageCommitVisible != null) {
+          _widget.onPageCommitVisible(this, call.arguments['url'] as String);
+        }
+        return true;
       case 'onWebResourceError':
         if (_widget.onWebResourceError == null) {
           return true;

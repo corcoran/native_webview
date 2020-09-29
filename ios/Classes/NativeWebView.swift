@@ -117,6 +117,11 @@ extension NativeWebView: WKNavigationDelegate {
         channel?.invokeMethod("onPageFinished", arguments: arguments)
     }
 
+    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        let arguments: [String: String?] = ["url": webView.url?.absoluteString]
+        channel?.invokeMethod("onPageCommitVisible", arguments: arguments)
+    }
+
     private func shouldOverrideUrlLoading(
         url: URL,
         method: String?,

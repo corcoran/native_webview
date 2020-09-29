@@ -15,12 +15,14 @@ class WebViewTestContext {
   final List<ShouldOverrideUrlLoadingRequest> loadingRequestEvents = [];
   final List<String> pageStartedEvents = [];
   final List<String> pageFinishedEvents = [];
+  final List<String> pageCommitVisibleEvents = [];
   final List<WebResourceError> webResourceErrorEvents = [];
 
   final loadingRequests = StreamController<ShouldOverrideUrlLoadingRequest>();
   final pageStarted = StreamController<String>();
   final webResourceError = StreamController<WebResourceError>();
   final pageFinished = StreamController<String>();
+  final pageCommitVisible = StreamController<String>();
 
   final webviewController = Completer<WebViewController>();
   final completed = Completer<void>();
@@ -44,6 +46,11 @@ class WebViewTestContext {
     pageFinished.add(url);
   }
 
+  void onPageCommitVisible(WebViewController controller, String url) {
+    pageCommitVisibleEvents.add(url);
+    pageCommitVisible.add(url);
+  }
+
   void onWebResourceError(WebResourceError error) {
     webResourceErrorEvents.add(error);
     webResourceError.add(error);
@@ -57,10 +64,12 @@ class WebViewTestContext {
     loadingRequestEvents.clear();
     pageStartedEvents.clear();
     pageFinishedEvents.clear();
+    pageCommitVisibleEvents.clear();
 
     loadingRequests.close();
     pageStarted.close();
     pageFinished.close();
+    pageCommitVisible.close();
   }
 }
 

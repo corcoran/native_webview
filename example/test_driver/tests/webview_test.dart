@@ -162,6 +162,7 @@ void main() {
         },
         onPageStarted: context.onPageStarted,
         onPageFinished: context.onPageFinished,
+        onPageCommitVisible: context.onPageCommitVisible,
       ),
     );
 
@@ -198,6 +199,7 @@ void main() {
           },
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
       context.pageFinished.stream.listen(onData([
@@ -226,6 +228,7 @@ void main() {
           },
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
       context.pageFinished.stream.listen(onData([
@@ -257,6 +260,7 @@ void main() {
           },
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
       context.pageFinished.stream.listen(onData([
@@ -281,6 +285,7 @@ void main() {
           },
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -312,6 +317,7 @@ void main() {
           },
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
         ),
       );
 
@@ -358,6 +364,7 @@ void main() {
           },
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
           gestureNavigationEnabled: true,
         ),
       );
@@ -380,6 +387,7 @@ void main() {
         """),
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
           debuggingEnabled: true,
         ),
       );
@@ -399,6 +407,7 @@ void main() {
         WebView(
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
           debuggingEnabled: true,
         ),
       );
@@ -413,6 +422,7 @@ void main() {
         WebView(
           onWebViewCreated: context.onWebViewCreated,
           onPageFinished: context.onPageFinished,
+          onPageCommitVisible: context.onPageCommitVisible,
           debuggingEnabled: true,
           userAgent: customUserAgent,
         ),
