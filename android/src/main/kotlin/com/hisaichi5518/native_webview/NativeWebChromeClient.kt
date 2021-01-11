@@ -3,19 +3,20 @@ package com.hisaichi5518.native_webview
 import android.content.DialogInterface
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.webkit.JsPromptResult
-import android.webkit.JsResult
-import android.webkit.WebChromeClient
-import android.webkit.WebView
+import android.webkit.*
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat.startActivityForResult
+import com.hisaichi5518.native_webview.Locator.Companion.REQUEST_SELECT_FILE
 import io.flutter.plugin.common.MethodChannel
 
 
@@ -47,6 +48,29 @@ if (!window.${JAVASCRIPT_BRIDGE_NAME}.callHandler) {
         window.${JAVASCRIPT_BRIDGE_NAME}._callHandler(arguments[0], JSON.stringify(Array.prototype.slice.call(arguments, 1)));
     };
 }""".trimIndent()
+    }
+
+    override fun onShowFileChooser(webview: WebView, filePathCallback: ValueCallback<Array<Uri>>,
+                                   fileChooserParams: FileChooserParams): Boolean {
+        if (Locator.uploadMessage != null) {
+            Locator.uploadMessage!!.onReceiveValue(null)
+            Locator.uploadMessage = null
+        }
+
+        Locator.uploadMessage = filePathCallback
+
+        val intent = fileChooserParams.createIntent()
+        try {
+            val activity = Locator.activity ?: return false
+            startActivityForResult(activity, intent, REQUEST_SELECT_FILE, Bundle.EMPTY)
+        } catch (e: Exception) {
+            Locator.uploadMessage = null
+            Log.e("NativeWebChromeClient", "Could not start file chooser activity: ${e.message}")
+            e.printStackTrace();
+            return false
+        }
+
+        return true
     }
 
     override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
