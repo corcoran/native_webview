@@ -1,6 +1,7 @@
 package com.hisaichi5518.native_webview
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.net.Uri
@@ -60,6 +61,8 @@ if (!window.${JAVASCRIPT_BRIDGE_NAME}.callHandler) {
         Locator.uploadMessage = filePathCallback
 
         val intent = fileChooserParams.createIntent()
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, fileChooserParams.acceptTypes)
+
         try {
             val activity = Locator.activity ?: return false
             startActivityForResult(activity, intent, REQUEST_SELECT_FILE, Bundle.EMPTY)
