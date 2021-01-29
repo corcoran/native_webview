@@ -141,8 +141,10 @@ class NativeWebViewClient(private val channel: MethodChannel, private val option
 
     override fun onReceivedError(
         view: WebView?, request: WebResourceRequest?, error: WebResourceError) {
-        onWebResourceError(
-            error.errorCode, error.description.toString())
+        if (request?.isForMainFrame == true) {
+            onWebResourceError(
+                    error.errorCode, error.description.toString())
+        }
     }
 
     private fun onWebResourceError(errorCode: Int, description: String) {
